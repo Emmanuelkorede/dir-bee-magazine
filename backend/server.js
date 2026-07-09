@@ -17,5 +17,5 @@ app.use((req , res) => {
 })
 
 app.listen(PORT  , () => {
-    console.log('sever running at http://localhost/') ;
+    console.log(`sever running at http://localhost:${PORT}/`) ;
 })
