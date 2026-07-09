@@ -9,7 +9,7 @@ app.use(express.json()) ;
 
 
 
-app.listen((req , res) => {
+app.use((req , res) => {
     console.log(`${req.method} ${req.url} not found`)
 })
 
