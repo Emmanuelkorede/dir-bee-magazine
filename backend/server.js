@@ -3,10 +3,13 @@ const app = express() ;
 const cors = require('cors') ;
 require('dotenv').config() ;
 const PORT = process.env.PORT || 8000 ;
+const {errorHandler} = require('./middleware/errorHandler') ;
 
 app.use(cors) ;
 app.use(express.json()) ;
 
+
+app.use(errorHandler)
 
 
 app.use((req , res) => {
