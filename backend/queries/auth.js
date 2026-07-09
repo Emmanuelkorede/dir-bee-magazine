@@ -19,9 +19,9 @@ const createUser = async (req , res) => {
                 messge : 'User registered succesfully',
                 token ,
                 user  : {
-                    id : user.id ,
-                    name : user.name ,
-                    email : user.email
+                    id : newUser.id ,
+                name : newUser.name ,
+                email : newUser.email
                 }
             }
         ) ; 
@@ -59,3 +59,5 @@ const login = async (req , res) => {
         handleDbError(err ,res)
     }
 }
+
+module.exports = {createUser , login} 
