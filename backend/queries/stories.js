@@ -15,7 +15,7 @@ const getStories = async (req, res) => {
         let queryParams = [] ;  
         if(category_url) {
             queryParams.push(category_url) 
-            queryText += `AND categories.url =$${queryParamns.length}`
+            queryText += ` AND categories.url =$${queryParams.length}`
         }
 
         if (q) {
@@ -40,7 +40,23 @@ const getStoriesFromUrl = async (req , res) => {
     } catch(err) {
         handleDbError(err , res) 
     }
-}
+} 
+
+const incrementViews = async (req, res) => {
+    try {
+        const { id } = req.params;
+        await pool.query(
+            'UPDATE stories SET views = COALESCE(views, 0) + 1 WHERE id = $1', 
+            [id]
+        );
+        res.status(200).json({ message: 'View counted' });
+    } catch (err) {
+        handleDbError(err, res);
+    }
+};
+
+
+
 
 //admin
 const getAdminStories = async (req , res) => {
@@ -61,17 +77,46 @@ const getAdminStories = async (req , res) => {
 }
 
 
-const incrementViews = async (req, res) => {
+const createStory = async (req, res) => {
     try {
-        const { id } = req.params;
-        await pool.query(
-            'UPDATE stories SET views = COALESCE(views, 0) + 1 WHERE id = $1', 
-            [id]
-        );
-        res.status(200).json({ message: 'View counted' });
+        // 1. Extract the text fields from the request body
+        const { title, content, url, published, scheduled_date, admin_user_id, category_id, video_urls, music_urls } = req.body;
+
+        // 2. Map over the uploaded files from Multer to get their secure Cloudinary URLs
+        // If no files are uploaded, default to an empty array
+        const image_urls = req.files ? req.files.map(file => file.path) : [];
+
+        // 3. Convert incoming link strings back to arrays if the frontend sends them as raw text strings
+        const finalVideoUrls = typeof video_urls === 'string' ? JSON.parse(video_urls) : video_urls || [];
+        const finalMusicUrls = typeof music_urls === 'string' ? JSON.parse(music_urls) : music_urls || [];
+
+        const queryText = `
+            INSERT INTO stories (
+                title, content, url, published, scheduled_date, admin_user_id, category_id, video_urls, music_urls, image_urls, views
+            ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, 0) 
+            RETURNING *
+        `;
+
+        const queryParams = [
+            title, 
+            content, 
+            url, 
+            published === 'true' || published === true, // Ensures it saves as a boolean
+            scheduled_date || null, 
+            admin_user_id, 
+            category_id, 
+            finalVideoUrls, 
+            finalMusicUrls, 
+            image_urls
+        ];
+
+        const result = await pool.query(queryText, queryParams);
+        res.status(201).json({ message: 'Story created successfully', result: result.rows[0] });
+
     } catch (err) {
         handleDbError(err, res);
     }
 };
 
-module.exports = {getAdminStories , getStories , getStoriesFromUrl , incrementViews}
+
+module.exports = {getAdminStories , getStories , getStoriesFromUrl , incrementViews , createStory}
