@@ -118,5 +118,14 @@ const createStory = async (req, res) => {
     }
 };
 
+const deleteStory = async (req , res) => {
+    try {
+        const {id} = req.params ; 
+        const result = await pool.query('DELETE FROM stories WHERE id = $1' , [id]) ; 
+        res.status(200).json({ message : 'story deleted succesfully '});
+    } catch(err) {
+        handleDbError(err , res) 
+    }
+}
 
-module.exports = {getAdminStories , getStories , getStoriesFromUrl , incrementViews , createStory}
+module.exports = {getAdminStories , getStories , getStoriesFromUrl , incrementViews , createStory , deleteStory}
