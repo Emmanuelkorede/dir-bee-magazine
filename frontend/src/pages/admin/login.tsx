@@ -1,100 +1,116 @@
 import React, { useState } from "react";
 import FormComponent from "../../components/FormComponent";
 import { BrandLogo } from "../../components/Logo";
+import { Eye , EyeOff } from "lucide-react";
 import axios from "axios";
-type RegsiterPayload = {
-    name : string ;
-    email : string ; 
-    password : string
+
+type RegisterPayload = { 
+    name: string;
+    email: string; 
+    password: string;
 }
 
 type LoginPayload = {
-    email : string ; 
-    password : string
+    email: string; 
+    password: string;
 }
 
-
 export default function Login() {
-     const[name , setName] = useState("") ;
-    const [password , setPassword] = useState("") ;
-    const [email , setEmail] = useState('') ;
-    const [loading , setLoading] = useState(false) ; 
-    const [message , setMessage]  = useState("") ; 
-    const [confirmPassword , setConfirmPassword] = useState("") ;
-    const [isSignUp , setIsSignUp] = useState(false) ;
+    const [name, setName] = useState("");
+    const [password, setPassword] = useState("");
+    const [email, setEmail] = useState('');
+    const [loading, setLoading] = useState(false); 
+    const [message, setMessage] = useState(""); 
+    const [confirmPassword, setConfirmPassword] = useState("");
+    const [isSignUp, setIsSignUp] = useState(false);
 
-    const handleSubmit = async (e : React.SubmitEvent<HTMLFormElement>) => {
-        e.preventDefault() ;
-        setLoading(true)
-        setMessage('') ;
-        if(email.trim() === "" || password.trim() === "" ) {
-            setMessage('please input the required feilds') ;
-            return 
+    const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setMessage('');
+        
+        if (email.trim() === "" || password.trim() === "") {
+            setMessage('Please fill in all required fields');
+            return;
         }
         
-        if(isSignUp === true) {
-            if(name.trim() === ""  ) {
-                setMessage('please input the required fields') ;
-                return 
+        if (isSignUp) {
+            if (name.trim() === "") {
+                setMessage('Please enter your name');
+                return;
             }
-            if(confirmPassword !== password) {
-                setMessage('PASSWORD DOES NOT MATCH') ;
-                return  ;
+            if (confirmPassword !== password) {
+                setMessage('Passwords do not match');
+                return;
             }
-            try {
-                const payload  : RegsiterPayload = {name , email , password} ; 
+        }
 
-                const response = await axios.post('http://localhost:8000/auth/register' , payload)
-                setMessage(response.data.message) ;
-            } catch(error) {
-                if(axios.isAxiosError(error)) {
-                    setMessage(error.response?.data?.message) 
-                } else {
-                    setMessage('somethin went wrong')
-                }
+        setLoading(true);
+
+        try {
+            if (isSignUp) {
+                const payload: RegisterPayload = { name, email, password }; 
+                const response = await axios.post('http://localhost:8000/auth/register', payload);
+                setMessage(response.data.message);
+            } else {
+                const payload: LoginPayload = { email, password }; 
+                const response = await axios.post('http://localhost:8000/auth/login', payload);
+                setMessage(response.data.message);
             }
-        } else {
-            try {
-                const payload : LoginPayload = {email , password} ; 
-                const response = await axios.post('http://localhost:8000/auth/login' , payload)
-                setMessage(response.data.message) ;
-            } catch(error) {
-                if(axios.isAxiosError(error)) {
-                    setMessage(error.response?.data?.message) 
-                } else {
-                    setMessage('something went wrong')
-                }
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                setMessage(error.response?.data?.message || 'An error occurred'); 
+            } else {
+                setMessage('Something went wrong');
             }
+        } finally {
+            setLoading(false);
         }
     }
 
     return (
         <form onSubmit={handleSubmit}>
             <BrandLogo className="h-20 w-auto" />
-            <div>{isSignUp === true ? 'Create an Account' : 'Log in to an existing'}</div>
-            <FormComponent id="name" label="Name"  type="text" value={name} onChange={(e) => setName(e.target
-                .value)} required={true}/>
+            <div>{isSignUp ? 'Create an Account' : 'Log in to an existing account'}</div>
+            
+            {isSignUp && (
+                <FormComponent 
+                    id="name" 
+                    label="Name" 
+                    type="text" 
+                    value={name} 
+                    onChange={(e) => setName(e.target.value)} 
+                    required={isSignUp}
+                />
+            )}
 
-            <FormComponent id="email" label="Email"  type="text" value={email} onChange={(e) => setEmail(e.target.value)} required={true}/>
+            <FormComponent id="email" label="Email" type="text" value={email} onChange={(e) => setEmail(e.target.value)} required={true}/>
 
-            <FormComponent id="password" label="Password"  type="password" value={password} onChange={(e) => setPassword(e.target.value)} required={true}/>
+            <FormComponent id="password" label="Password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required={true}/>
                 
-            <FormComponent id="confirmPassword" label="Confirm Password"  type="text" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required={true}/>
+            {isSignUp && (
+                <FormComponent 
+                    id="confirmPassword" 
+                    label="Confirm Password" 
+                    type="password" 
+                    value={confirmPassword} 
+                    onChange={(e) => setConfirmPassword(e.target.value)} 
+                    required={isSignUp}
+                />
+            )}
 
-            {message && <p>{message}</p>}
+            {message && <p style={{ color: 'red' }}>{message}</p>}
 
-            {loading === true ? 
-                <button type="submit" >
-                {isSignUp === true ? 'Creating Account' : 'Logining'}
-                </button>
-            : 
-            <button type="submit" >
-                {isSignUp === true ? 'Create Account' : 'Login'}
+            <button type="submit" disabled={loading}>
+                {loading ? (isSignUp ? 'Creating Account...' : 'Logging in...') : (isSignUp ? 'Create Account' : 'Login')}
             </button>
-            }
+            
             <div>
-                <p>Have an account already ? <button onClick={() => setIsSignUp(false)}>Login</button></p>
+                {isSignUp ? (
+                    <p>Have an account already? <button type="button" onClick={() => { setIsSignUp(false); setMessage(''); }}>Login</button></p>
+                ) : (
+                    <p>Don't have an account? <button type="button" onClick={() => { setIsSignUp(true); setMessage(''); }}>Sign Up</button></p>
+                )}
             </div>
         </form>
-    )
+    );
 }
