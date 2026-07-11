@@ -56,7 +56,7 @@ export default function Login() {
         const Adminname = response.data.user.name 
         localStorage.setItem('token' , token) ;
         localStorage.setItem('Adminname' , Adminname) ;
-        navigate('/dashboard')
+        navigate('/admin')
       } else {
         const payload: LoginPayload = { email, password }; 
         const response = await axios.post('http://localhost:8000/auth/login', payload);
@@ -65,7 +65,7 @@ export default function Login() {
         const Adminname = response.data.user.name 
         localStorage.setItem('token' , token) ;
         localStorage.setItem('Adminname' , Adminname) ;
-        navigate('/dashboard')
+        navigate('/admin')
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {
