@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import FormComponent from "../../components/FormComponent";
 import { BrandLogo } from "../../components/Logo";
-import { Eye , EyeOff } from "lucide-react";
 import axios from "axios";
 
 type RegisterPayload = { 
