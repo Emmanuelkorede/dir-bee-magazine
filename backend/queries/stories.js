@@ -80,7 +80,8 @@ const getAdminStories = async (req , res) => {
 const createStory = async (req, res) => {
     try {
         // 1. Extract the text fields from the request body
-        const { title, content, url, published, scheduled_date, admin_user_id, category_id, video_urls, music_urls } = req.body;
+        const { title, content, url, published, scheduled_date, category_id, video_urls, music_urls } = req.body;
+        const admin_user_id = req.user.userId ;
 
         // 2. Map over the uploaded files from Multer to get their secure Cloudinary URLs
         // If no files are uploaded, default to an empty array
@@ -118,6 +119,41 @@ const createStory = async (req, res) => {
     }
 };
 
+const editstory = async (req ,res) => {
+    try {
+        const { title, content, url, published, scheduled_date, category_id, video_urls, music_urls } = req.body;
+        const {id} = req.params ;
+        const admin_user_id = req.user.userId ;
+
+
+        const image_urls = req.files ? req.files.map(file => file.path) : [ ] ;
+        const finalVideoUrls = typeof video_urls === 'string' ? JSON.parse(video_urls) : video_urls || [] ; 
+        const finalMusicUrls = typeof music_urls === 'string' ? JSON.parse(music_urls) : music_urls || [] ; 
+
+        let queryText = `
+        UPDATE stories  
+        SET title = $1, content = $2, url = $3, published = $4, scheduled_date = $5, 
+            admin_user_id = $6, category_id = $7, video_urls = $8, music_urls = $9, image_urls = $10 
+        WHERE id = $11 
+        RETURNING *
+        `;
+
+        let queryParams = [
+        title, content, url, 
+        published === 'true' || published === true, 
+        scheduled_date || null, 
+        admin_user_id, category_id, 
+        finalVideoUrls, finalMusicUrls, image_urls, 
+        id
+        ];
+        
+        const result = await pool.query(queryText , queryParams) ;
+        res.status(200).json({ message : 'story updated succesfully ' , result : result.rows});
+    } catch(err) {
+        handleDbError(err , res) 
+    }
+}
+
 const deleteStory = async (req , res) => {
     try {
         const {id} = req.params ; 
@@ -128,4 +164,6 @@ const deleteStory = async (req , res) => {
     }
 }
 
-module.exports = {getAdminStories , getStories , getStoriesFromUrl , incrementViews , createStory , deleteStory}
+
+
+module.exports = {getAdminStories , getStories , getStoriesFromUrl , incrementViews , createStory , deleteStory , editstory}
