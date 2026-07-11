@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 300" width="100%" height="100%">
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <defs>
+    <style>
+      .serif-text {
+        font-family: "Playfair Display", "Georgia", "Times New Roman", serif;
+        font-weight: bold;
+      }
+      .script-text {
+        font-family: "Great Vibes", "Edwardian Script ITC", "Bickham Script Pro", "Brush Script MT", cursive;
+        font-style: italic;
+      }
+    </style>
+  </defs>
+
+  <g transform="translate(50, 50)">
+    <text x="30" y="180" font-size="180" fill="#F3E1B9" class="serif-text">B</text>
+    
+    <text x="62" y="162" font-size="42" fill="#F3E1B9" class="script-text">ee</text>
+    
+    <text x="155" y="180" font-size="180" fill="#6E543C" class="serif-text">M</text>
+    
+    <circle cx="335" cy="170" r="11" fill="#6E543C"/>
+  </g>
+</svg>

@@ -1,3 +1,27 @@
-@import "tailwindcss"
+@import "tailwindcss";
 
+@theme {
+  --font-serif: "Playfair Display", serif;
+  --font-script: "Great Vibes", cursive;
 
+  --color-canvas: #FCFCFC;       /* Off-white background */
+  --color-ink: #111111;          /* High-contrast deep charcoal text */
+  --color-muted-ink: #555555;    /* Gray text for dates and subtitles */
+  --color-cream: #F3E5AB;        /* Logo B & accent elements */
+  --color-burnt-brown: #4A2E1B;  /* Logo M & deep structural items */
+}
+
+@layer base {
+  body {
+    background-color: var(--color-canvas);
+    color: var(--color-ink);
+    font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+}
