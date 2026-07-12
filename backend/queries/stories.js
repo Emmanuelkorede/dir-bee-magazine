@@ -59,20 +59,28 @@ const incrementViews = async (req, res) => {
 
 
 //admin
-const getAdminStories = async (req , res) => {
+const getAdminStories = async (req, res) => {
     try {
-        const { status} = req.query ; 
-        let queryText = 'SELECT * FROM stories' ;
-        if(status === 'published') {
-            queryText+= ' WHERE published = true' ;
+        const { status } = req.query; 
+        let queryText = `
+            SELECT stories.*, categories.name AS category_name, categories.url AS category_url
+            FROM stories
+            LEFT JOIN categories ON stories.category_id = categories.id
+        `;
+        let queryParams = [];
+
+        if (status === 'published') {
+            queryText += ' WHERE stories.published = true';
         } else if (status === 'draft') {
-            queryText+= ' WHERE published = false' ;
+            queryText += ' WHERE stories.published = false';
         }
-         queryText += ' ORDER BY created_at DESC'
-        const result = await pool.query(queryText) ;
-        res.status(200).json({ result : result.rows });
-    } catch(err) {
-        handleDbError(err , res) 
+
+        queryText += ' ORDER BY stories.created_at DESC';
+
+        const result = await pool.query(queryText, queryParams);
+        res.status(200).json({ result: result.rows });
+    } catch (err) {
+        handleDbError(err, res);
     }
 }
 
