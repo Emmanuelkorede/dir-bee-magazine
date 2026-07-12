@@ -8,6 +8,8 @@ type Stories = {
     id: string;
     admin_user_id: string;
     category_id: string;
+    category_name : string ;
+    category_url : string ; 
     title: string;
     content: string;
     url: string;
@@ -144,7 +146,7 @@ export default function DashBoard() {
 
                   <div className="p-5 flex flex-col gap-2">
                     <span className="font-sans font-extrabold text-[10px] tracking-widest text-burnt-brown uppercase">
-                      Category ID: {story.category_id ? story.category_id.slice(0, 8) : 'Unassigned'}
+                      Category Name: {story.category_name}
                     </span>
                     
                     <h2 className="font-serif text-base font-bold text-ink leading-snug group-hover:text-burnt-brown transition-colors line-clamp-2">

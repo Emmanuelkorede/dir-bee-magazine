@@ -2,7 +2,8 @@
 import { Route, Routes } from 'react-router'
 import DashBoard from './pages/admin/dashboard'
 import Login from './pages/admin/login'
-import ProtectedRoute from './components/ProtectedRoute'
+import ProtectedRoute from './components/ProtectedRoute' ;
+import StoryContent from './pages/admin/storyContent';
 import './App.css' 
 
 
@@ -15,7 +16,7 @@ function App() {
         
       <Route element={<ProtectedRoute />} >
         <Route path='/admin' element={<DashBoard />} />
-        <Route path='/admin/story/:id' />
+        <Route path='/admin/story/:id'  element={<StoryContent />}/>
       </Route>
     </Routes>
   )
