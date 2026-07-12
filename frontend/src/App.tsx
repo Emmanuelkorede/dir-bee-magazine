@@ -15,6 +15,7 @@ function App() {
         
       <Route element={<ProtectedRoute />} >
         <Route path='/admin' element={<DashBoard />} />
+        <Route path='/admin/story/:id' />
       </Route>
     </Routes>
   )
