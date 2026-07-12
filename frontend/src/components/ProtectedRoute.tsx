@@ -1,14 +1,13 @@
-import { useNavigate , Outlet } from "react-router";
+import { Navigate, Outlet } from "react-router";
 
-const ProctectedRoute = () => {
-    const navigate = useNavigate() ; 
-    const token = localStorage.getItem('token') ; 
+const ProtectedRoute = () => {
+    const token = localStorage.getItem('token'); 
 
-    if(!token) {
-        navigate('/login')
+    if (!token) {
+        return <Navigate to="/admin/login" replace />;
     }
 
-    return <Outlet />
-}
+    return <Outlet />;
+};
 
-export default ProctectedRoute ; 
+export default ProtectedRoute;
