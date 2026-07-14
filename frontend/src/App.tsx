@@ -15,7 +15,7 @@ function App() {
       <Route path='/admin/login' element={<Login />} />
         
       <Route element={<ProtectedRoute />} >
-        <Route path='/admin' element={<DashBoard />} />
+        <Route path='/' element={<DashBoard />} />
         <Route path='/admin/story/:id'  element={<StoryContent />}/>
       </Route>
     </Routes>

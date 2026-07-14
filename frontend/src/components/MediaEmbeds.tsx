@@ -86,7 +86,6 @@ export const VideoEmbed: React.FC<EmbedProps> = ({ rawUrl }) => {
             title="Instagram post embed"
             style={{ border: 0 }}
             scrolling="no"
-            allowTransparency
           ></iframe>
         </div>
       );
@@ -146,7 +145,6 @@ export const MusicEmbed: React.FC<EmbedProps> = ({ rawUrl }) => {
         width="100%"
         height={platform === 'spotify' ? '152' : platform === 'audiomack' ? '252' : '175'}
         style={{ border: 0 }}
-        allowTransparency
         allow="encrypted-media; clipboard-write; picture-in-picture"
         title={`${platform} music player`}
         loading="lazy"
