@@ -4,6 +4,7 @@ import DashBoard from './pages/admin/dashboard'
 import Login from './pages/admin/login'
 import ProtectedRoute from './components/ProtectedRoute' ;
 import StoryContent from './pages/admin/storyContent';
+import AdminStories from './pages/admin/stories';
 import './App.css' 
 import Categories from './pages/admin/categories';
 
@@ -19,6 +20,7 @@ function App() {
         <Route path='/' element={<DashBoard />} />
         <Route path='/admin/story/:id'  element={<StoryContent />}/>
         <Route path='/admin/categories' element={<Categories />} />
+        <Route path='/admin/stories' element={<AdminStories />} />
       </Route>
     </Routes>
   )
