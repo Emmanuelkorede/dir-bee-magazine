@@ -6,6 +6,7 @@ import {
   Music, Pencil, Trash2, Plus, X, Globe, FileText, CheckCircle 
 } from "lucide-react";
 import { VideoEmbed , MusicEmbed } from "../../components/MediaEmbeds";
+import FormComponent from "../../components/FormComponent";
 
 type Story = {
   id: string;
@@ -214,7 +215,7 @@ export default function StoryContent() {
     );
   }
 
-  return (
+return (
     <div className="min-h-screen bg-canvas pb-20 selection:bg-cream selection:text-burnt-brown">
       <header className="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-gray-100">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
@@ -269,16 +270,14 @@ export default function StoryContent() {
               <p className="text-muted-ink font-sans text-xs tracking-normal mt-0.5">Slug generation runs directly in the layout background context.</p>
             </div>
 
-            <div>
-              <label className="block font-sans text-[10px] font-extrabold tracking-widest uppercase text-muted-ink mb-1.5">Core Story Title</label>
-              <input 
-                type="text" 
-                value={title} 
-                onChange={(e) => setTitle(e.target.value)} 
-                className="w-full bg-canvas border border-gray-200 px-4 py-2.5 font-sans text-sm text-ink outline-none focus:border-burnt-brown transition-colors"
-                required
-              />
-            </div>
+            <FormComponent
+              id="title"
+              label="Core Story Title"
+              type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              required={true}
+            />
 
             <div>
               <label className="block font-sans text-[10px] font-extrabold tracking-widest uppercase text-muted-ink mb-1.5">Editorial Content Box</label>

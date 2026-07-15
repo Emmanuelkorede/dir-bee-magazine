@@ -1,5 +1,5 @@
 import FormComponent from "../../components/FormComponent";
-import  { useState } from "react";
+import  React, { useState } from "react";
 import DashboardMenu from "../../components/dashboardMenu";
 
 export default function AdminStories() {
@@ -9,7 +9,16 @@ export default function AdminStories() {
     const [scheduledDate, setScheduledDate] = useState('');
     const [videoUrls, setVideoUrls] = useState<string[]>([]); 
     const [musicUrls, setMusicUrls] = useState<string[]>([]); 
+    const [imageFiles, setImageFiles] = useState<string[]>([]); 
 
+    const handefileChange = (e : React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if(file) {
+            const objectURL = URL.createObjectURL(file) ; 
+            setImageFiles([...imageFiles , objectURL])
+        }
+        console.log(imageFiles)
+    }
     
     return (
         <>
@@ -22,6 +31,17 @@ export default function AdminStories() {
             </div>
             <div>
                 <FormComponent  id="scheduled_date" label="Schedule a date for post" value={scheduledDate} onChange={(e) => setScheduledDate(e.target.value)} type="date" />
+            </div>
+            <div>
+                <input type="file" accept="image/*" onChange={(e) => handefileChange(e)}/>
+                <div>
+                    {imageFiles.map((img , idx) => (
+                        <div key={`img-in-${idx}`}> 
+                            <img  src={img}/>
+                            <button onClick={() => setImageFiles(imageFiles.filter((_ , i) => i !== idx))}>cancel</button>
+                        </div>
+                    )) }
+                </div>
             </div>
             <div>
                 <p>Video Platform Links</p> <button onClick={()  => setVideoUrls([...videoUrls , ''])}>+ Add Link</button>
