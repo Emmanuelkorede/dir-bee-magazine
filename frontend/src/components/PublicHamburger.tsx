@@ -62,7 +62,7 @@ export default function Header() {
 
   const handleNavigation = (url: string) => {
     navigate(`/category/${url}`);
-    setIsOpen(false); // Cleanly close drawer when path changes
+    setIsOpen(false); 
   };
 
   return (
@@ -71,30 +71,19 @@ export default function Header() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20 sm:h-24">
             
-            {/* LEFT: Brands Title & Logo */}
             <div className="flex items-center gap-3 cursor-pointer group" onClick={() => navigate("/")}>
               <div className="w-12 h-12 sm:w-14 sm:h-14 overflow-hidden flex items-center justify-center transition-transform duration-500 group-hover:scale-105">
-                {/* Passing specific colors to matching editorial canvas specs */}
                 <BrandLogo 
-                  className="h-full w-auto scale-150" 
-                  colorOverrides={{
-                    bColor: "#4A2E1B", // Rich Burnt Brown
-                    eeColor: "#D4AF37", // Elegant muted gold
-                    mColor: "#1C1917"  // Almost-black ink
-                  }}
+                  className="h-28 w-auto" 
                 />
               </div>
               <div className="flex flex-col">
                 <span className="font-serif text-xl sm:text-2xl font-black tracking-tight leading-none text-ink">
                   Bee's Magz
                 </span>
-                <span className="text-[9px] font-sans tracking-widest font-bold uppercase text-burnt-brown mt-0.5">
-                  Editorial House
-                </span>
               </div>
             </div>
 
-            {/* CENTER: Desktop Categories Navigation */}
             <nav className="hidden lg:flex items-center gap-8">
               {loading ? (
                 <Loader2 className="w-4 h-4 animate-spin text-muted-ink" />
@@ -106,7 +95,7 @@ export default function Header() {
                       key={cat.id}
                       onClick={() => handleNavigation(cat.url)}
                       className={`font-sans text-[11px] font-bold tracking-widest uppercase transition-all duration-200 relative py-2 cursor-pointer
-                        ${isActive ? 'text-burnt-brown' : 'text-ink/75 hover:text-burnt-brown'}
+                        ${isActive ? 'text-burnt-brown' : 'text-ink hover:text-burnt-brown'}
                       `}
                     >
                       {cat.name}
@@ -119,15 +108,13 @@ export default function Header() {
               )}
             </nav>
 
-            {/* RIGHT: Socials & Desktop CTA */}
             <div className="hidden lg:flex items-center gap-6">
-              {/* Clean minimal social link grid */}
               <div className="flex items-center gap-4 border-r border-[#E5E2DA] pr-6">
                 <a 
                   href="https://instagram.com" 
                   target="_blank" 
                   rel="noreferrer" 
-                  className="text-ink/70 hover:text-burnt-brown transition-colors cursor-pointer"
+                  className="text-ink hover:text-burnt-brown transition-colors cursor-pointer"
                   title="Instagram"
                 >
                   <svg 
@@ -149,10 +136,9 @@ export default function Header() {
                   href="https://tiktok.com" 
                   target="_blank" 
                   rel="noreferrer" 
-                  className="text-ink/70 hover:text-burnt-brown transition-colors cursor-pointer"
+                  className="text-ink hover:text-burnt-brown transition-colors cursor-pointer"
                   title="TikTok"
                 >
-                  {/* Native Custom SVG for TikTok to fit styling */}
                   <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
                     <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.01 1.62 4.14.99 1.13 2.37 1.83 3.84 2.1v3.91c-1.78-.02-3.5-.63-4.93-1.74-.15-.12-.3-.24-.44-.37v6.86c.01 1.6-.42 3.19-1.25 4.54a8.31 8.31 0 01-8.52 3.98A8.252 8.252 0 011.02 15c-.4-3.13.91-6.32 3.39-8.24a8.21 8.21 0 016.22-1.63V9.1c-1.3-.36-2.73-.02-3.73.87-.99.89-1.46 2.27-1.24 3.59.21 1.3 1.12 2.39 2.36 2.85 1.25.47 2.68.18 3.65-.72.48-.44.75-1.07.75-1.72V0h1.125z"/>
                   </svg>
@@ -161,7 +147,7 @@ export default function Header() {
                   href="https://youtube.com" 
                   target="_blank" 
                   rel="noreferrer" 
-                  className="text-ink/70 hover:text-burnt-brown transition-colors cursor-pointer"
+                  className="text-ink hover:text-burnt-brown transition-colors cursor-pointer"
                   title="YouTube"
                 >
                   <svg 
@@ -181,15 +167,14 @@ export default function Header() {
               </div>
 
               <button 
-                onClick={() => navigate('/subscribe')}
+                onClick={() => navigate('')}
                 className="px-5 py-2.5 bg-burnt-brown hover:bg-[#342013] text-canvas font-sans text-[10px] font-bold tracking-widest uppercase transition-all duration-300 shadow-xs cursor-pointer flex items-center gap-2"
               >
-                Subscribe
+                Get Featured
                 <ArrowRight className="w-3.5 h-3.5" />
               </button>
             </div>
 
-            {/* MOBILE: Hamburger Button */}
             <div className="flex lg:hidden items-center gap-3">
               <button
                 onClick={() => setIsOpen(!isOpen)}
@@ -204,22 +189,18 @@ export default function Header() {
         </div>
       </header>
 
-      {/* MOBILE DRAWER OVERLAY (Slides in seamlessly) */}
       <div 
         className={`fixed inset-0 z-50 lg:hidden transition-all duration-500 ease-in-out
           ${isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}
         `}
       >
-        {/* Dark blur backdrop */}
         <div className="absolute inset-0 bg-black/40 backdrop-blur-xs" onClick={() => setIsOpen(false)} />
 
-        {/* Sidebar Panel container */}
         <div 
           className={`absolute top-0 right-0 bottom-0 w-full max-w-[340px] bg-canvas border-l border-[#E5E2DA] p-6 flex flex-col justify-between shadow-2xl transition-transform duration-500 ease-in-out
             ${isOpen ? 'translate-x-0' : 'translate-x-full'}
           `}
         >
-          {/* Top Panel Actions */}
           <div>
             <div className="flex items-center justify-between pb-6 border-b border-[#E5E2DA]">
               <span className="font-serif text-lg font-black text-ink tracking-tight">Navigation</span>
@@ -231,7 +212,6 @@ export default function Header() {
               </button>
             </div>
 
-            {/* Main Category List */}
             <nav className="flex flex-col gap-1.5 pt-6">
               {loading ? (
                 <div className="flex justify-center p-8">
@@ -253,9 +233,6 @@ export default function Header() {
                       `}
                     >
                       {cat.name}
-                      <span className="text-[9px] font-sans tracking-wider font-semibold uppercase text-burnt-brown bg-cream/40 px-2 py-0.5 group-hover:bg-burnt-brown group-hover:text-canvas transition-colors">
-                        Explore
-                      </span>
                     </button>
                   );
                 })
@@ -263,8 +240,7 @@ export default function Header() {
             </nav>
           </div>
 
-          {/* Bottom Panel Actions & Social Hooks */}
-          <div className="pt-6 border-t border-[#E5E2DA] space-y-6">
+          <div className="pt-6 pb-16 border-t border-[#E5E2DA] space-y-6">
             <div className="space-y-3">
               <span className="font-sans text-[10px] font-extrabold tracking-widest uppercase text-muted-ink block">
                 Connect with us
@@ -320,12 +296,12 @@ export default function Header() {
 
             <button 
               onClick={() => {
-                navigate('/subscribe');
+                navigate('');
                 setIsOpen(false);
               }}
               className="w-full py-3 bg-burnt-brown hover:bg-[#342013] text-canvas font-sans text-xs font-bold tracking-widest uppercase transition-colors cursor-pointer flex items-center justify-center gap-2"
             >
-              Get The Magazine
+              Get Featured
               <ArrowRight className="w-4 h-4" />
             </button>
           </div>
