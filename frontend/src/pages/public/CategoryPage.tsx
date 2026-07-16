@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from "react-router";
-import Header from "../../components/PublicHamburger";
+import Header from "../../components/Header";
 import { useEffect, useState } from "react";
 import axios from "axios";
 

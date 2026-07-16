@@ -17,7 +17,7 @@ type CategoryType = {
 };
 
 export default function Header() {
-  const [message, setMessage] = useState('');
+  const [, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const [categories, setCategories] = useState<CategoryType[]>([]); 
   const [isOpen, setIsOpen] = useState(false); 
