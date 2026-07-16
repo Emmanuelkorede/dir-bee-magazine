@@ -89,7 +89,7 @@ export default function DashBoard() {
             </div>
 
             <button 
-              onClick={() => navigate('/admin/stories/new')}
+              onClick={() => navigate('/admin/stories')}
               className="inline-flex items-center justify-center gap-2 bg-burnt-brown hover:bg-[#342013] text-canvas font-sans text-xs font-bold tracking-widest uppercase px-4 py-2.5 transition-colors duration-200 cursor-pointer"
             >
               <Plus className="size-4" />
