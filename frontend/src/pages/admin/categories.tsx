@@ -80,7 +80,7 @@ export default function Categories() {
 
   const handleDeleteCat = async (catId: string) => {
     try {
-      const response = await axios.delete(`http://localhost:8000/category/${catId}`, getAuthHeader());
+      const response = await axios.delete(`${API_BASE}/category/${catId}`, getAuthHeader());
       setMessage(response.data.message || 'Category successfully deleted');
       setDeleteId(null); 
       getCategories();
