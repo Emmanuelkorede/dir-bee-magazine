@@ -32,7 +32,7 @@ export default function Footer() {
             </span>
             <nav className="flex flex-col gap-3">
               <button 
-                onClick={() => navigate("")} 
+                onClick={() => navigate("/about")} 
                 className="text-left font-sans text-xs font-bold text-ink/85 hover:text-burnt-brown tracking-widest uppercase transition-colors cursor-pointer"
               >
                 About Us

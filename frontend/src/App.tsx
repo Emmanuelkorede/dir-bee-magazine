@@ -9,7 +9,7 @@ import './App.css'
 import Categories from './pages/admin/categories';
 import CategoryPage from './pages/public/CategoryPage';
 import StoryDetails from './pages/public/StoryDetails';
-
+import About from './pages/public/About';
 
 
 function App() {
@@ -18,6 +18,7 @@ function App() {
     <Routes>
       <Route path='/category/:url'  element={<CategoryPage />} />
       <Route  path='/storydetails/:url/:id' element={<StoryDetails />}/>
+      <Route path='/about' element={<About />} />
       {/*admin */}
       <Route path='/admin/login' element={<Login />} />
         
