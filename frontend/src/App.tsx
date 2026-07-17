@@ -8,6 +8,7 @@ import AdminStories from './pages/admin/stories';
 import './App.css' 
 import Categories from './pages/admin/categories';
 import CategoryPage from './pages/public/CategoryPage';
+import StoryDetails from './pages/public/StoryDetails';
 
 
 
@@ -16,6 +17,7 @@ function App() {
   return (
     <Routes>
       <Route path='/category/:url'  element={<CategoryPage />} />
+      <Route  path='/storydetails/:url/:id' element={<StoryDetails />}/>
       {/*admin */}
       <Route path='/admin/login' element={<Login />} />
         
