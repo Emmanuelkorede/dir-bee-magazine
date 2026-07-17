@@ -49,16 +49,14 @@ export default function StoryDetails() {
     return { headers: { Authorization: `Bearer ${token}` } };
   };
 
-  // --------------------------------------------------------------------------
-  // Core Business Logics - UNTOUCHED (as requested)
-  // --------------------------------------------------------------------------
+  
   const getStoryDetails = async () => {
     if (!id || !url) return null;
     try {
       const response = await axios.get(`${API_BASE}/story/${url}/${id}`, getAuthHeader());
       const fetchedStory = response.data.result;
       setStory(fetchedStory);
-      console.log("Current Story:", fetchedStory);
+      
       
       await axios.patch(`${API_BASE}/story/${id}/view`);
       

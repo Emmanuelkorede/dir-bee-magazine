@@ -4,7 +4,7 @@ const handleDbError = require('../middleware/dberror') ;
 const getCategories = async (req , res) => {
     try {
         const result = await pool.query('SELECT * FROM categories ORDER BY created_at DESC' ) ;
-        res.status(201).json({ result : result.rows}) ; 
+        res.status(200).json({ result : result.rows}) ; 
     } catch(err) {
         handleDbError(err , res)
     }
