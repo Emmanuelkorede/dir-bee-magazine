@@ -11,6 +11,7 @@ import CategoryPage from './pages/public/CategoryPage';
 import StoryDetails from './pages/public/StoryDetails';
 import About from './pages/public/About';
 import Home from './pages/public/Home';
+import GetFeatured from './pages/public/GetFeatured';
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
       <Route path='/category/:url'  element={<CategoryPage />} />
       <Route  path='/storydetails/:url/:id' element={<StoryDetails />}/>
       <Route path='/about' element={<About />} />
+      <Route path='/get-featured' element={<GetFeatured />} />
       {/*admin */}
       <Route path='/admin/login' element={<Login />} />
         

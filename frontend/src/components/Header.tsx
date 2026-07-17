@@ -164,7 +164,7 @@ export default function Header() {
               </div>
 
               <button 
-                onClick={() => navigate('')}
+                onClick={() => navigate('/get-featured')}
                 className="px-5 py-2.5 bg-burnt-brown hover:bg-[#342013] text-canvas font-sans text-[10px] font-bold tracking-widest uppercase transition-all duration-300 shadow-xs cursor-pointer flex items-center gap-2"
               >
                 Get Featured

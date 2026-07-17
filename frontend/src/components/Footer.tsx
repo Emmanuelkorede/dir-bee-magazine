@@ -37,7 +37,7 @@ export default function Footer() {
                 About Us
               </button>
               <button 
-                onClick={() => navigate("")} 
+                onClick={() => navigate("/get-featured")} 
                 className="text-left font-sans text-xs font-bold text-ink/85 hover:text-burnt-brown tracking-widest uppercase transition-colors cursor-pointer"
               >
                 Get Featured

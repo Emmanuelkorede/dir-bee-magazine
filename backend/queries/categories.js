@@ -24,7 +24,7 @@ const deleteCategory = async (req , res) => {
     try {
         const {id} = req.params ;
         const result = await pool.query('DELETE FROM categories WHERE id = $1 ' , [id]) ;
-        res.status(201).json({messge : 'Category deleted'}) ; 
+        res.status(200).json({message : 'Category deleted'}) ; 
     } catch(err) {
         handleDbError(err ,res)
     }

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import DashboardMenu from "../../components/dashboardMenu" ;
 import axios from "axios";
 import { useNavigate } from "react-router";
-import { Eye, Calendar, FileEdit, Plus } from "lucide-react";
+import { Eye, Calendar, FileEdit, Plus , Link} from "lucide-react";
 
 type Stories = {
     id: string;
@@ -29,7 +29,7 @@ export default function DashBoard() {
     const [status , setStatus] = useState('') ;
     const navigate = useNavigate();
     const API_BASE = import.meta.env.VITE_API_BASE_URL ;
-
+    const siteLink = `https://bee-magazine.vercel.app/` ;
     const getAuthHeader =  () => {
         const token = localStorage.getItem('token') ; 
         return { headers: { Authorization: `Bearer ${token}` } };
@@ -164,6 +164,18 @@ export default function DashBoard() {
                   <div className="flex items-center gap-1">
                     <Eye className="size-3.5 text-ink/70" />
                     <span>{story.views || 0} Reads</span>
+                  </div>
+                  <div>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        navigator.clipboard.writeText(`${siteLink}storydetails/${story.url}/${story.id}`);
+                      }}
+                      className="flex items-center gap-1 text-ink/70 hover:text-burnt-brown transition-colors"
+                    >
+                      <Link className="size-3.5" />
+                      <span>Copy Link</span>
+                    </button>
                   </div>
                   
                   <div className="flex items-center gap-1">
