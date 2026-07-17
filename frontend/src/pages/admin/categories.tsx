@@ -28,6 +28,7 @@ export default function Categories() {
   const [editName, setEditName] = useState('');
   const [isEditing, setIsEditing] = useState(false);
   const [id, setId] = useState('');
+  const API_BASE = import.meta.env.VITE_API_BASE_URL ;
   
   const [deleteId, setDeleteId] = useState<string | null>(null);
 
@@ -47,7 +48,7 @@ export default function Categories() {
 
   const getCategories = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/category/', getAuthHeader());
+      const response = await axios.get(`${API_BASE}/category/`, getAuthHeader());
       setCategories(response.data.result);
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -64,7 +65,7 @@ export default function Categories() {
       const urlSlug = generateSlug(editName);
       const payload2 = { name: editName, url: urlSlug };
       
-      const response = await axios.patch(`http://localhost:8000/category/${id}`, payload2, getAuthHeader());
+      const response = await axios.patch(`${API_BASE}/category/${id}`, payload2, getAuthHeader());
       setMessage(response.data.message);
       setIsEditing(false);
       getCategories();
@@ -79,7 +80,7 @@ export default function Categories() {
 
   const handleDeleteCat = async (catId: string) => {
     try {
-      const response = await axios.delete(`http://localhost:8000/category/${catId}`, getAuthHeader());
+      const response = await axios.delete(`${API_BASE}/category/${catId}`, getAuthHeader());
       setMessage(response.data.message || 'Category successfully deleted');
       setDeleteId(null); 
       getCategories();
@@ -99,7 +100,7 @@ export default function Categories() {
       const urlSlug = generateSlug(name);
       const payload: Payload = { name, url: urlSlug };
       
-      await axios.post('http://localhost:8000/category/', payload, getAuthHeader());
+      await axios.post(`${API_BASE}/category/`, payload, getAuthHeader());
       setMessage('Category created successfully!');
       setName('');
       getCategories();

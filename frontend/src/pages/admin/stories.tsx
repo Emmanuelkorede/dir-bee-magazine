@@ -40,6 +40,7 @@ export default function AdminStories() {
     const [loading , setLoading] = useState(false) ;
     const [categories , setCategories] = useState<CategoryType[]>([]) ; 
     const [chosenCatId  ,setChosenCatId] = useState('') ; 
+    const API_BASE = import.meta.env.VITE_API_BASE_URL ;
 
     const getAuthHeader = () => {
         const token = localStorage.getItem('token') ; 
@@ -55,7 +56,6 @@ export default function AdminStories() {
         .replace(/^-+|-+$/g, ''); 
     };
 
-    // LOGIC ADDED: Allows choosing multiple files at once while strictly enforcing a cap of 10.
     const handefileChange = (e : React.ChangeEvent<HTMLInputElement>) => {
         const files = e.target.files;
         if (files) {
@@ -83,7 +83,7 @@ export default function AdminStories() {
         setMessage('') ; 
         setLoading(true);
         try {
-            const response = await axios.get('http://localhost:8000/category/' , getAuthHeader()) ; 
+            const response = await axios.get(`${API_BASE}/category/` , getAuthHeader()) ; 
             setCategories(response.data.result);
             if(response.data.result?.length > 0) {
               setChosenCatId(response.data.result[0].id);
@@ -105,7 +105,6 @@ export default function AdminStories() {
         try {
             const url = generateSlug(title);
             
-            // LOGIC ADDED: Safely converts standard HTML picker date string to Database-friendly ISO TIMESTAMPTZ
             let formattedTimestamp = scheduledDate;
             if (scheduledDate) {
                 try {
@@ -130,7 +129,7 @@ export default function AdminStories() {
               formData.append('image_urls', item.file);
             });
 
-            const response = await axios.post('http://localhost:8000/story/admin/', formData, {
+            const response = await axios.post(`${API_BASE}/story/admin/`, formData, {
               headers: {
                 ...getAuthHeader().headers,
                 'Content-Type': 'multipart/form-data'

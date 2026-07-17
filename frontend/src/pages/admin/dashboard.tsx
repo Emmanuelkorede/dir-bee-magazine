@@ -28,6 +28,7 @@ export default function DashBoard() {
     const [stories ,setStories] = useState<Stories[]>([]) ;
     const [status , setStatus] = useState('') ;
     const navigate = useNavigate();
+    const API_BASE = import.meta.env.VITE_API_BASE_URL ;
 
     const getAuthHeader =  () => {
         const token = localStorage.getItem('token') ; 
@@ -39,7 +40,7 @@ export default function DashBoard() {
         try {
             const params = new URLSearchParams();  ; 
             if(status) params.append('status' , status) ;
-            const url = `http://localhost:8000/story/admin?${params.toString()}`
+            const url = `${API_BASE}/story/admin?${params.toString()}`
             const response = await axios.get(url , getAuthHeader()) ;
             setStories(response.data.result)
         } catch(error) {

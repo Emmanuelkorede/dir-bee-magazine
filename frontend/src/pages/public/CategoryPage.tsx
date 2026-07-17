@@ -29,7 +29,8 @@ export default function CategoryPage() {
   const [message, setMessage] = useState('');
   const [stories, setStories] = useState<Story[]>([]);
   const navigate = useNavigate();
-
+  const API_BASE = import.meta.env.VITE_API_BASE_URL ;
+  
   const getAuthHeader = () => {
     const token = localStorage.getItem('token');
     return { headers: { Authorization: `Bearer ${token}` } };
@@ -40,7 +41,7 @@ export default function CategoryPage() {
     setLoading(true);
     setMessage('');
     try {
-      const response = await axios.get(`http://localhost:8000/story/?category_url=${url}`, getAuthHeader());
+      const response = await axios.get(`${API_BASE}/story/?category_url=${url}`, getAuthHeader());
       setStories(response.data.result || []);
     } catch (error) {
       if (axios.isAxiosError(error)) {

@@ -24,6 +24,7 @@ export default function Login() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isSignUp, setIsSignUp] = useState(false);
   const navigate = useNavigate() ;
+  const API_BASE = import.meta.env.VITE_API_BASE_URL ;
 
   const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -50,7 +51,7 @@ export default function Login() {
     try {
       if (isSignUp) {
         const payload: RegisterPayload = { name, email, password }; 
-        const response = await axios.post('http://localhost:8000/auth/register', payload);
+        const response = await axios.post(`${API_BASE}/auth/register`, payload);
         setMessage(response.data.message);
         const token =  response.data.token ;
         const Adminname = response.data.user.name 
@@ -59,7 +60,7 @@ export default function Login() {
         navigate('/admin')
       } else {
         const payload: LoginPayload = { email, password }; 
-        const response = await axios.post('http://localhost:8000/auth/login', payload);
+        const response = await axios.post(`${API_BASE}/auth/login`, payload);
         setMessage(response.data.message);
         const token =  response.data.token ;
         const Adminname = response.data.user.name 

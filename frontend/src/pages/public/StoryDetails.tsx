@@ -38,6 +38,7 @@ export default function StoryDetails() {
   const [trendingStories, setTrendingStories] = useState<Story[]>([]);
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState('');
+  const API_BASE = import.meta.env.VITE_API_BASE_URL ;
 
   // Lightbox State
   const [lightboxOpen, setLightboxOpen] = useState(false);
@@ -54,12 +55,12 @@ export default function StoryDetails() {
   const getStoryDetails = async () => {
     if (!id || !url) return null;
     try {
-      const response = await axios.get(`http://localhost:8000/story/${url}/${id}`, getAuthHeader());
+      const response = await axios.get(`${API_BASE}/story/${url}/${id}`, getAuthHeader());
       const fetchedStory = response.data.result;
       setStory(fetchedStory);
       console.log("Current Story:", fetchedStory);
       
-      await axios.patch(`http://localhost:8000/story/${id}/view`);
+      await axios.patch(`${API_BASE}/story/${id}/view`);
       
       return fetchedStory;
     } catch (error) {
@@ -72,11 +73,11 @@ export default function StoryDetails() {
   const getCategoryAndTrending = async (activeCategoryUrl: string) => {
     try {
       if (activeCategoryUrl) {
-        const catResponse = await axios.get(`http://localhost:8000/story/?category_url=${activeCategoryUrl}`, getAuthHeader());
+        const catResponse = await axios.get(`${API_BASE}/story/?category_url=${activeCategoryUrl}`, getAuthHeader());
         setCategoryStories(catResponse.data.result);
       }
 
-      const allResponse = await axios.get(`http://localhost:8000/story/`, getAuthHeader());
+      const allResponse = await axios.get(`${API_BASE}/story/`, getAuthHeader());
       const all = allResponse.data.result || [];
       const sorted = [...all].sort((a, b) => b.views - a.views).slice(0, 5);
       setTrendingStories(sorted);

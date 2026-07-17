@@ -23,6 +23,7 @@ export default function Header() {
   const [isOpen, setIsOpen] = useState(false); 
   const navigate = useNavigate();
   const location = useLocation();
+  const API_BASE = import.meta.env.VITE_API_BASE_URL ;
 
   const getAuthHeader = () => {
     const token = localStorage.getItem('token'); 
@@ -33,7 +34,7 @@ export default function Header() {
     setMessage(''); 
     setLoading(true);
     try {
-      const response = await axios.get('http://localhost:8000/category/', getAuthHeader()); 
+      const response = await axios.get(`${API_BASE}/category/`, getAuthHeader()); 
       setCategories(response.data.result);
     } catch (error) {
       if (axios.isAxiosError(error)) {

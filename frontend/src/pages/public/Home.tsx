@@ -20,13 +20,14 @@ const Home = () => {
   const [stories, setStories] = useState<Story[]>([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+    const API_BASE = import.meta.env.VITE_API_BASE_URL ;
 
   
   useEffect(() => {
     const fetchHomeData = async () => {
       try {
         setLoading(true);
-        const response = await axios.get('http://localhost:8000/story/');
+        const response = await axios.get(`${API_BASE}/story/`);
         setStories(response.data.result || []);
       } catch (err) {
         console.error('Error fetching homepage stories:', err);

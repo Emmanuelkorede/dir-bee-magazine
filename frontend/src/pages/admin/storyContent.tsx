@@ -49,6 +49,7 @@ export default function StoryContent() {
   const [existingImages, setExistingImages] = useState<string[]>([]);
   const [newImageFiles, setNewImageFiles] = useState<File[]>([]);
   const [replaceIndex, setReplaceIndex] = useState<number | null>(null);
+  const API_BASE = import.meta.env.VITE_API_BASE_URL ;
 
   const getAuthHeader = () => {
     const token = localStorage.getItem('token'); 
@@ -58,7 +59,7 @@ export default function StoryContent() {
   const getStory = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(`http://localhost:8000/story/admin/${id}`, getAuthHeader());
+      const response = await axios.get(`${API_BASE}/story/admin/${id}`, getAuthHeader());
       const data = response.data.result;
       setStory(data);
       
@@ -97,7 +98,7 @@ export default function StoryContent() {
   const handleDelete = async () => {
     try {
       setLoading(true);
-      const response = await axios.delete(`http://localhost:8000/story/admin/${id}`, getAuthHeader());
+      const response = await axios.delete(`${API_BASE}/story/admin/${id}`, getAuthHeader());
       navigate('/admin', { state: { message: response.data.message } });
     } catch(error) {
       setDeleting(false);
@@ -125,7 +126,7 @@ export default function StoryContent() {
       formData.append('music_urls', JSON.stringify(musicUrls));
       formData.append('existing_images', JSON.stringify(existingImages));
 
-      await axios.patch(`http://localhost:8000/story/admin/${id}`, formData, getAuthHeader());
+      await axios.patch(`${API_BASE}/story/admin/${id}`, formData, getAuthHeader());
       setPublishingConfirm(false);
       await getStory();
     } catch(error) {
@@ -159,7 +160,7 @@ export default function StoryContent() {
         formData.append('image_urls', file); 
       });
 
-      const response = await axios.patch(`http://localhost:8000/story/admin/${id}`, formData, {
+      const response = await axios.patch(`${API_BASE}/story/admin/${id}`, formData, {
         headers: {
           ...getAuthHeader().headers,
           'Content-Type': 'multipart/form-data'
