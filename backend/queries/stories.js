@@ -35,7 +35,10 @@ const getStories = async (req, res) => {
 const getStoriesFromUrl = async (req , res) => {
     try {
         const { url , id } = req.params ; 
-        const result = await pool.query('SELECT * FROM stories WHERE url=$1 AND id = $2' , [url  , id]) ; 
+        const result = await pool.query(`SELECT stories.*, categories.name AS category_name, categories.url AS category_url
+            FROM stories 
+            LEFT JOIN categories ON stories.category_id = categories.id
+            WHERE stories.url = $1 AND stories.id = $2` , [url  , id]) ; 
         res.status(200).json({ result : result.rows[0] });
     } catch(err) {
         handleDbError(err , res) 
