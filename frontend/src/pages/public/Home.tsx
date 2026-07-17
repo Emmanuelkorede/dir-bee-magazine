@@ -30,7 +30,7 @@ const Home = () => {
         const response = await axios.get(`${API_BASE}/story/`);
         setStories(response.data.result || []);
       } catch (err) {
-        console.error('Error fetching homepage stories:', err);
+        console.error('Error fetching homepage stories:', err)
       } finally {
         setLoading(false);
       }
