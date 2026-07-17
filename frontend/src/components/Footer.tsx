@@ -44,12 +44,12 @@ export default function Footer() {
                 Get Featured
               </button>
               <a 
-                href="https://dribbble.com" 
+                href="https://director-bee.vercel.app/" 
                 target="_blank" 
                 rel="noreferrer" 
                 className="text-left font-sans text-xs font-bold text-ink/85 hover:text-burnt-brown tracking-widest uppercase transition-colors cursor-pointer"
               >
-                Dribbble
+                Dir Bee
               </a>
             </nav>
           </div>
