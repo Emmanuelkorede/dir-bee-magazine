@@ -12,7 +12,7 @@ const createCatRules = [
 
 router.post('/' ,authMiddleware , validate(createCatRules) , createCategory) ;
 router.delete('/:id' ,authMiddleware ,  deleteCategory) ;
-router.get('/' ,authMiddleware , getCategories) ;
+router.get('/'  , getCategories) ;
 router.patch('/:id' ,authMiddleware , editCategory)
 
 

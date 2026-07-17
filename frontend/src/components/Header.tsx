@@ -25,16 +25,13 @@ export default function Header() {
   const location = useLocation();
   const API_BASE = import.meta.env.VITE_API_BASE_URL ;
 
-  const getAuthHeader = () => {
-    const token = localStorage.getItem('token'); 
-    return { headers: { Authorization: `Bearer ${token}` } };
-  };
+
 
   const getCategories = async () => {
     setMessage(''); 
     setLoading(true);
     try {
-      const response = await axios.get(`${API_BASE}/category/`, getAuthHeader()); 
+      const response = await axios.get(`${API_BASE}/category/`); 
       setCategories(response.data.result);
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -51,7 +48,6 @@ export default function Header() {
     getCategories();
   }, []);
 
-  // Lock body scroll when mobile menu is active
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
