@@ -15,7 +15,7 @@ function App() {
   
   return (
     <Routes>
-      <Route path='/'  element={<CategoryPage />} />
+      <Route path='/category/:url'  element={<CategoryPage />} />
       {/*admin */}
       <Route path='/admin/login' element={<Login />} />
         
