@@ -2,6 +2,12 @@
 
 A modern, lightweight, dynamic digital magazine and Content Management System (CMS) built with a Node.js/Express backend, PostgreSQL (via Neon), Cloudinary, and a responsive React/Tailwind frontend.
 
+---
+
+### 🌐 Live Demo
+👉 **Experience the live app here:** **[https://bee-magazine.vercel.app/](https://2026-world-cup-job.vercel.app/)** 
+---
+
 > ⚠️ **Important Note:** This system includes an automatic cleanup pipeline. Deleting or updating stories automatically triggers a backend script to purge deleted or orphaned media assets from your Cloudinary storage.
 
 ---
